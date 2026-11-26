@@ -3,8 +3,8 @@ FROM eclipse-temurin:21-jdk AS build
 WORKDIR /workspace
 
 # The API packages reviewed content from the repository-level content/ directory.
-COPY apps/api/ apps/api/
-COPY content/ content/
+COPY labscape/apps/api/ apps/api/
+COPY labscape/content/ content/
 
 WORKDIR /workspace/apps/api
 RUN chmod +x ./mvnw && ./mvnw --batch-mode --no-transfer-progress -DskipTests package
