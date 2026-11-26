@@ -10,7 +10,7 @@ labscape:
   web-origins: ${WEB_ORIGINS:${WEB_ORIGIN:http://localhost:5173},http://127.0.0.1:5173}
   dev-db:
     dir: .data/pg
-    port: 54329
+    port: 15432
   auth:
     cookie-secure: false
     admin-bootstrap-emails: admin@labscape.dev
