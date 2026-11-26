@@ -1,0 +1,362 @@
+{
+  "slug": "gas-fire",
+  "title": "Gas fire in the kitchen",
+  "kind": "fire",
+  "minutes": 5,
+  "free": true,
+  "summary": "A small flame flares at the LPG regulator while you make tea. Smother it, stop the gas, clear the air and get help.",
+  "sources": [
+    "Indian Oil (Indane), Bharat Gas and HP Gas LPG consumer safety advice",
+    "LPG emergency helpline 1906 (Ministry of Petroleum and Natural Gas)",
+    "National Disaster Management Authority (India): fire safety guidance",
+    "112 India: national emergency number"
+  ],
+  "tools": [
+    { "id": "point", "label": "Point it out", "hint": "Spot or check something" },
+    { "id": "hands", "label": "Your hands", "hint": "Touch, turn, open, tell" },
+    { "id": "wet-towel", "label": "Thick wet towel", "hint": "Soaked kitchen towel" },
+    { "id": "fire-blanket", "label": "Fire blanket", "hint": "From the kitchen wall" },
+    { "id": "water-bucket", "label": "Bucket of water", "hint": "Full bucket" },
+    { "id": "newspaper", "label": "Newspaper", "hint": "To fan with" },
+    { "id": "matchbox", "label": "Matchbox", "hint": "For the stove" },
+    { "id": "phone", "label": "Phone", "hint": "112 and LPG 1906" }
+  ],
+  "hotspots": [
+    { "id": "brother", "label": "Your brother, in the next room", "x": 8, "y": 96, "w": 82, "h": 200 },
+    { "id": "stove", "label": "Stove and kettle", "x": 122, "y": 118, "w": 166, "h": 62 },
+    { "id": "fan", "label": "Exhaust fan", "x": 212, "y": 42, "w": 76, "h": 74 },
+    { "id": "regulator", "label": "Cylinder regulator", "x": 292, "y": 170, "w": 82, "h": 62 },
+    { "id": "window", "label": "Kitchen window", "x": 394, "y": 40, "w": 124, "h": 116 },
+    { "id": "switches", "label": "Light and fan switches", "x": 520, "y": 150, "w": 42, "h": 56 },
+    { "id": "door", "label": "Door to outside", "x": 564, "y": 88, "w": 76, "h": 216 }
+  ],
+  "scenes": [
+    {
+      "id": "detect",
+      "stage": "detection",
+      "timerS": 12,
+      "growth": 1.2,
+      "hazard": 15,
+      "narration": "You're making tea. There's a strong smell of gas, then a hiss, and a small flame flickers where the regulator meets the cylinder.",
+      "prompt": "Spot the danger. Pick \"Point it out\" and tap where it is.",
+      "hints": [
+        { "text": "A smell of gas plus a flame is never normal. Where exactly is the flame: on the burner, or somewhere it shouldn't be?" },
+        { "text": "Look where the cylinder meets the regulator, not at the stove burner.", "target": "regulator" },
+        { "text": "Pick \"Point it out\" and use it on the cylinder regulator, then shout \"Fire!\" so everyone hears.", "tool": "point", "target": "regulator" }
+      ],
+      "props": ["kettle", "gas", "fire"],
+      "choices": [
+        {
+          "id": "recognise",
+          "label": "Point at the regulator: a gas fire! Shout \"Fire!\" so everyone hears",
+          "quality": "best",
+          "feedback": "Right. A smell of gas plus a flame at the cylinder is an emergency. Spotting it fast and raising the alarm buys everyone time.",
+          "next": "assess",
+          "hazardDelta": -15,
+          "recognise": true,
+          "action": { "tool": "point", "target": "regulator" },
+          "anim": "alert"
+        },
+        {
+          "id": "light",
+          "label": "Flick on the light to see better",
+          "quality": "unsafe",
+          "feedback": "Never switch anything electrical on or off when you smell gas: the tiny spark inside a switch can ignite it.",
+          "next": "assess",
+          "hazardDelta": 25,
+          "action": { "tool": "hands", "target": "switches" },
+          "anim": "switch-spark"
+        },
+        {
+          "id": "ignore",
+          "label": "It's just the stove burner. Keep making tea.",
+          "quality": "unsafe",
+          "feedback": "The flame is at the regulator, not the burner. Gas fires at a cylinder can grow quickly while you wait.",
+          "next": "assess",
+          "hazardDelta": 25,
+          "action": { "tool": "point", "target": "stove" },
+          "anim": "flame-grow"
+        }
+      ]
+    },
+    {
+      "id": "assess",
+      "stage": "assessment",
+      "timerS": 15,
+      "growth": 1.6,
+      "hazard": 30,
+      "narration": "The flame is small, about the size of your palm, and isn't touching the cylinder body. Your little brother is watching TV in the next room. The door to outside is behind you.",
+      "prompt": "Who or what comes first?",
+      "hints": [
+        { "text": "In any emergency, people come before things. Is anyone else in the house who could get hurt?" },
+        { "text": "Look at the next room: your little brother is watching TV.", "target": "brother" },
+        { "text": "Use your hands on your brother: tell him to go outside now, and make sure your own way out is clear.", "tool": "hands", "target": "brother" }
+      ],
+      "props": ["kettle", "gas", "fire"],
+      "choices": [
+        {
+          "id": "alert",
+          "label": "Tell your brother to go outside now, and check your own way out is clear",
+          "quality": "best",
+          "feedback": "Yes. People first. With him safe and your exit clear, you can decide calmly whether the fire is small enough to tackle.",
+          "next": "smother",
+          "hazardDelta": -15,
+          "action": { "tool": "hands", "target": "brother" },
+          "anim": "brother-leaves"
+        },
+        {
+          "id": "fan",
+          "label": "Switch on the exhaust fan to clear the gas",
+          "quality": "unsafe",
+          "feedback": "A fan switch and motor can spark and ignite the gas. Leave all electrical switches alone. Open windows by hand instead, later.",
+          "next": "smother",
+          "hazardDelta": 25,
+          "action": { "tool": "hands", "target": "fan" },
+          "anim": "switch-spark"
+        },
+        {
+          "id": "newspaper",
+          "label": "Wave a newspaper at the flame to blow it out",
+          "quality": "unsafe",
+          "feedback": "Fanning feeds the fire with air and pushes the flame about. It won't put out burning gas, and paper catches fire.",
+          "next": "smother",
+          "hazardDelta": 25,
+          "action": { "tool": "newspaper", "target": "regulator" },
+          "anim": "flame-grow"
+        }
+      ]
+    },
+    {
+      "id": "smother",
+      "stage": "decision",
+      "timerS": 12,
+      "growth": 2,
+      "hazard": 40,
+      "narration": "Your brother is outside. The flame at the regulator is still small. A thick towel is soaking in the sink, and there's a bucket of water by the door.",
+      "prompt": "Put the fire out safely: drag a tool onto it.",
+      "hints": [
+        { "text": "Think about what keeps a fire burning: fuel, heat and air. You can't reach the gas yet, so what could cut off the air? (Water won't stop burning gas.)" },
+        { "text": "The flame is at the regulator. Something thick and wet laid over it would starve it of air.", "target": "regulator" },
+        { "text": "Throw the thick wet towel over the regulator (the fire blanket works too). Only while the flame is small and your exit is clear.", "tool": "wet-towel", "target": "regulator" }
+      ],
+      "props": ["kettle", "gas", "fire", "brother-gone"],
+      "choices": [
+        {
+          "id": "towel",
+          "label": "Throw the thick wet towel over the regulator to smother the flame",
+          "quality": "best",
+          "feedback": "Right. A thick wet towel (or wet sack) over a small regulator fire cuts off the air and puts it out. Only do this while the fire is small and your way out is clear.",
+          "next": "shutoff",
+          "hazardDelta": -20,
+          "action": { "tool": "wet-towel", "target": "regulator" },
+          "anim": "cover-towel"
+        },
+        {
+          "id": "blanket",
+          "label": "Pull the fire blanket and lay it over the regulator",
+          "quality": "best",
+          "feedback": "Yes. A fire blanket smothers the flame just like a wet towel. Lay it over the fire, keeping your hands behind it.",
+          "next": "shutoff",
+          "hazardDelta": -20,
+          "action": { "tool": "fire-blanket", "target": "regulator" },
+          "anim": "cover-blanket"
+        },
+        {
+          "id": "water",
+          "label": "Throw the bucket of water on the flame",
+          "quality": "unsafe",
+          "feedback": "Water won't stop burning gas, and if a pan of oil is burning, water makes it explode into a fireball. Never use water on a gas or oil fire. (Your mum rushes in and smothers it with a wet towel.)",
+          "next": "shutoff",
+          "hazardDelta": 25,
+          "action": { "tool": "water-bucket", "target": "regulator" },
+          "anim": "water-flare"
+        },
+        {
+          "id": "grab",
+          "label": "Reach through the flame and turn the knob off",
+          "quality": "unsafe",
+          "feedback": "Never reach into a flame. Smother the fire first, then close the regulator. (Your mum rushes in and smothers it with a wet towel.)",
+          "next": "shutoff",
+          "hazardDelta": 25,
+          "action": { "tool": "hands", "target": "regulator" },
+          "anim": "recoil"
+        },
+        {
+          "id": "leave",
+          "label": "It feels too risky: get out of the kitchen and call for help",
+          "quality": "ok",
+          "feedback": "Getting out is never wrong. A palm-sized regulator flame can be smothered with a wet towel if you feel safe; if it's bigger, or touching the cylinder, get out and call 112. (Your mum smothers it and closes the regulator.)",
+          "next": "outside",
+          "hazardDelta": 0,
+          "action": { "tool": "hands", "target": "door" },
+          "anim": "evacuate"
+        }
+      ]
+    },
+    {
+      "id": "shutoff",
+      "stage": "decision",
+      "timerS": 12,
+      "growth": 1,
+      "hazard": 30,
+      "narration": "The flame is out under the cloth, but gas is still hissing out of the regulator.",
+      "prompt": "Stop the gas.",
+      "hints": [
+        { "text": "The flame is out, but gas is still hissing. Where is the gas actually coming from?" },
+        { "text": "Look at the regulator on top of the cylinder. The stove knobs won't stop a leak there.", "target": "regulator" },
+        { "text": "Use your hands on the regulator: turn its knob to OFF and leave the cloth in place.", "tool": "hands", "target": "regulator" }
+      ],
+      "props": ["kettle", "gas", "towel-on", "brother-gone"],
+      "choices": [
+        {
+          "id": "knob",
+          "label": "Turn the regulator knob to OFF, leaving the cloth in place",
+          "quality": "best",
+          "feedback": "Yes. With the flame out, switching the regulator off stops the gas. Leave the cloth on, and don't touch anything that is still hot.",
+          "next": "ventilate",
+          "hazardDelta": -15,
+          "action": { "tool": "hands", "target": "regulator" },
+          "anim": "knob-off"
+        },
+        {
+          "id": "stove",
+          "label": "Turn off the stove knobs",
+          "quality": "poor",
+          "feedback": "A good habit, but the leak is at the regulator itself. Turning the stove off doesn't stop it. Close the regulator knob.",
+          "next": "ventilate",
+          "hazardDelta": 10,
+          "action": { "tool": "hands", "target": "stove" },
+          "anim": "stove-off"
+        },
+        {
+          "id": "match",
+          "label": "Strike a match near the regulator to check if gas is still coming out",
+          "quality": "unsafe",
+          "feedback": "Never use a flame to look for a gas leak: it can reignite the gas around you. Use your nose and ears, and close the regulator.",
+          "next": "ventilate",
+          "hazardDelta": 25,
+          "action": { "tool": "matchbox", "target": "regulator" },
+          "anim": "gas-flash"
+        }
+      ]
+    },
+    {
+      "id": "ventilate",
+      "stage": "consequence",
+      "timerS": 15,
+      "growth": 0.8,
+      "hazard": 30,
+      "narration": "The gas is off, but the kitchen still smells strongly of LPG.",
+      "prompt": "Clear the gas safely.",
+      "hints": [
+        { "text": "The room is full of gas. How can you let it out without making a single spark? (Switches and motors spark.)" },
+        { "text": "Look at the kitchen window and the door. Leave the fan and the switches alone.", "target": "window" },
+        { "text": "Use your hands on the window (or the door) to open it wide.", "tool": "hands", "target": "window" }
+      ],
+      "props": ["kettle", "gas", "towel-on", "knob-off", "brother-gone"],
+      "choices": [
+        {
+          "id": "windows",
+          "label": "Open the windows and the door wide by hand",
+          "quality": "best",
+          "feedback": "Right. Fresh air lets the gas escape. Don't switch anything electrical on or off until the smell has completely gone.",
+          "next": "outside",
+          "hazardDelta": -15,
+          "actions": [{ "tool": "hands", "target": "window" }, { "tool": "hands", "target": "door" }],
+          "anim": "window-open"
+        },
+        {
+          "id": "fan",
+          "label": "Switch on the exhaust fan",
+          "quality": "unsafe",
+          "feedback": "The fan switch can spark and ignite the leftover gas. Open windows and doors by hand instead.",
+          "next": "outside",
+          "hazardDelta": 25,
+          "action": { "tool": "hands", "target": "switches" },
+          "anim": "switch-spark"
+        },
+        {
+          "id": "fanblade",
+          "label": "Turn the exhaust fan on with its pull cord",
+          "quality": "unsafe",
+          "feedback": "Any electric motor can spark. With gas in the room, open windows by hand and leave electrics alone.",
+          "next": "outside",
+          "hazardDelta": 25,
+          "action": { "tool": "hands", "target": "fan" },
+          "anim": "switch-spark"
+        }
+      ]
+    },
+    {
+      "id": "outside",
+      "stage": "consequence",
+      "timerS": 15,
+      "growth": 0.6,
+      "hazard": 25,
+      "narration": "The fire is out, but the regulator is damaged and the cylinder must be checked before anyone uses the gas again.",
+      "prompt": "Get help.",
+      "hints": [
+        { "text": "The cylinder is damaged. Who needs to check it before anyone uses gas again, and where is the safest place to phone from?" },
+        { "text": "Look at the door: step outside, away from any gas still in the air.", "target": "door" },
+        { "text": "Use the phone at the door: from outside, call 112 and the LPG emergency helpline 1906.", "tool": "phone", "target": "door" }
+      ],
+      "props": ["kettle", "towel-on", "knob-off", "window-open", "door-open", "brother-gone"],
+      "choices": [
+        {
+          "id": "call",
+          "label": "Step outside, then call 112 and the LPG emergency helpline 1906",
+          "quality": "best",
+          "feedback": "Right. Call from outside, away from any leftover gas. Tell them it was an LPG regulator fire. The gas agency (1906) will check and replace the regulator; warn the neighbours too.",
+          "next": "end-safe",
+          "hazardDelta": -15,
+          "escalate": true,
+          "action": { "tool": "phone", "target": "door" },
+          "anim": "call"
+        },
+        {
+          "id": "callin",
+          "label": "Make the calls from inside the kitchen",
+          "quality": "poor",
+          "feedback": "Calling is right, but use your phone outside, away from any gas that's still in the air.",
+          "next": "end-safe",
+          "hazardDelta": 10,
+          "escalate": true,
+          "action": { "tool": "phone", "target": "stove" },
+          "anim": "call"
+        },
+        {
+          "id": "relight",
+          "label": "Relight the stove and finish making the tea",
+          "quality": "unsafe",
+          "feedback": "Never relight anything until the gas agency has checked the cylinder and replaced the regulator. Leftover gas can flash.",
+          "next": "end-unsafe",
+          "hazardDelta": 25,
+          "action": { "tool": "matchbox", "target": "stove" },
+          "anim": "gas-flash"
+        }
+      ]
+    }
+  ],
+  "endings": {
+    "end-safe": {
+      "outcome": "safe",
+      "text": "The gas agency mechanic replaces the damaged regulator and checks the hose. Everyone is safe because you raised the alarm, smothered the flame and stopped the gas."
+    },
+    "end-unsafe": {
+      "outcome": "unsafe",
+      "text": "The match lit the gas that was still hanging in the kitchen and a flash of flame singed the curtains. In real life this is how people get badly burned."
+    }
+  },
+  "learn": [
+    "Smell gas? Don't touch any electrical switch, on or off, and never use a flame to check for a leak.",
+    "A small flame at the regulator: smother it with a thick wet towel or fire blanket, then turn the regulator off. Never use water on a gas or oil fire.",
+    "If the fire is bigger than that, or touching the cylinder, get everyone out and call 112 from outside.",
+    "Open windows and doors by hand to let the gas escape.",
+    "Call 112 and the LPG emergency helpline 1906; don't use the gas again until it's been checked."
+  ],
+  "id": "emergency-gas-fire",
+  "version": 2,
+  "reviewStatus": "draft",
+  "disclaimer": "Training only. This is not a substitute for emergency services or certified first-aid and fire-safety training. In a real emergency in India, call 112 (LPG emergencies: 1906).",
+  "quizId": "quiz-emergency-gas-fire"
+}

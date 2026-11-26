@@ -1,0 +1,633 @@
+{
+  "id": "chem-indicators-ph",
+  "slug": "ph-indicators",
+  "version": 1,
+  "subject": "chemistry",
+  "title": "Acid-base indicators",
+  "fidelity": "exact",
+  "reviewStatus": "draft",
+  "idea": {
+    "text": "Indicators are dyes that change colour depending on whether a solution is acidic, neutral or alkaline. Universal indicator shows a whole rainbow of colours across the pH scale from 1 to 14; litmus just turns red in acid and blue in alkali.",
+    "analogy": "Like a mood ring for liquids: the colour tells you how acidic or alkaline a solution is."
+  },
+  "bench": {
+    "items": [
+      {
+        "id": "acid",
+        "kind": "reagent_bottle",
+        "label": "Dilute hydrochloric acid 0.1 M",
+        "x": -320,
+        "z": -60,
+        "fill": {
+          "reagentId": "hcl-0.1",
+          "volumeMl": 150
+        }
+      },
+      {
+        "id": "water",
+        "kind": "reagent_bottle",
+        "label": "Distilled water",
+        "x": -240,
+        "z": -60,
+        "fill": {
+          "reagentId": "water",
+          "volumeMl": 200
+        }
+      },
+      {
+        "id": "base",
+        "kind": "reagent_bottle",
+        "label": "Dilute sodium hydroxide 0.1 M",
+        "x": -160,
+        "z": -60,
+        "fill": {
+          "reagentId": "naoh-0.1",
+          "volumeMl": 150
+        }
+      },
+      {
+        "id": "univ",
+        "kind": "dropper_bottle",
+        "label": "Universal indicator",
+        "x": 220,
+        "z": -50,
+        "fill": {
+          "reagentId": "univ",
+          "volumeMl": 20
+        }
+      },
+      {
+        "id": "litmus",
+        "kind": "dropper_bottle",
+        "label": "Litmus solution",
+        "x": 290,
+        "z": -50,
+        "fill": {
+          "reagentId": "litmus",
+          "volumeMl": 20
+        }
+      },
+      {
+        "id": "rack",
+        "kind": "test_tube_rack",
+        "x": 0,
+        "z": 40
+      },
+      {
+        "id": "t1",
+        "kind": "test_tube",
+        "label": "Tube 1 (acid)",
+        "x": -60,
+        "z": 40,
+        "socket": "rack:rack"
+      },
+      {
+        "id": "t2",
+        "kind": "test_tube",
+        "label": "Tube 2 (water)",
+        "x": 0,
+        "z": 40,
+        "socket": "rack:rack"
+      },
+      {
+        "id": "t3",
+        "kind": "test_tube",
+        "label": "Tube 3 (alkali)",
+        "x": 60,
+        "z": 40,
+        "socket": "rack:rack"
+      },
+      {
+        "id": "t4",
+        "kind": "test_tube",
+        "label": "Tube 4 (acid)",
+        "x": -60,
+        "z": 110
+      },
+      {
+        "id": "t5",
+        "kind": "test_tube",
+        "label": "Tube 5 (alkali)",
+        "x": 60,
+        "z": 110
+      }
+    ]
+  },
+  "steps": [
+    {
+      "id": "acid-in",
+      "title": "2 mL acid into tube 1",
+      "instruction": "Pour about 2 mL of dilute acid into tube 1. Small volumes: tilt gently.",
+      "action": "liquid.pour",
+      "from": "acid",
+      "to": "t1",
+      "quantity": {
+        "target": 2,
+        "plusMinus": 0.5,
+        "unit": "mL"
+      },
+      "technique": {
+        "kind": "slow_pour",
+        "maxRateMlPerS": 3
+      },
+      "hints": [
+        "vol-1",
+        "vol-2",
+        "vol-3"
+      ],
+      "whatIf": {
+        "rate": "A fast pour into a narrow test tube splashes. 2 mL is a small amount: tilt gently.",
+        "overshoot": "More liquid dilutes the indicator, so the colour comes out paler and harder to judge.",
+        "quantity": "A very different volume in each tube makes the colours harder to compare fairly."
+      },
+      "explore": [
+        {
+          "if": "use 1 M acid instead of 0.1 M",
+          "then": "Still red: universal indicator shows pH, and both are very acidic (about pH 0 and pH 1). The difference is too small to see."
+        }
+      ]
+    },
+    {
+      "id": "water-in",
+      "title": "2 mL water into tube 2",
+      "instruction": "Pour about 2 mL of distilled water into tube 2.",
+      "action": "liquid.pour",
+      "from": "water",
+      "to": "t2",
+      "quantity": {
+        "target": 2,
+        "plusMinus": 0.5,
+        "unit": "mL"
+      },
+      "technique": {
+        "kind": "slow_pour",
+        "maxRateMlPerS": 3
+      },
+      "hints": [
+        "vol-1",
+        "vol-2",
+        "vol-3"
+      ],
+      "whatIf": {
+        "rate": "A fast pour into a narrow test tube splashes. 2 mL is a small amount: tilt gently.",
+        "overshoot": "More liquid dilutes the indicator, so the colour comes out paler and harder to judge.",
+        "quantity": "A very different volume in each tube makes the colours harder to compare fairly."
+      },
+      "explore": [
+        {
+          "if": "use tap water instead of distilled water",
+          "then": "Tap water has dissolved minerals and gases, so it might show yellow-green or blue-green instead of pure green."
+        }
+      ]
+    },
+    {
+      "id": "base-in",
+      "title": "2 mL alkali into tube 3",
+      "instruction": "Pour about 2 mL of dilute alkali into tube 3.",
+      "action": "liquid.pour",
+      "from": "base",
+      "to": "t3",
+      "quantity": {
+        "target": 2,
+        "plusMinus": 0.5,
+        "unit": "mL"
+      },
+      "technique": {
+        "kind": "slow_pour",
+        "maxRateMlPerS": 3
+      },
+      "hints": [
+        "vol-1",
+        "vol-2",
+        "vol-3"
+      ],
+      "whatIf": {
+        "rate": "A fast pour into a narrow test tube splashes. 2 mL is a small amount: tilt gently.",
+        "overshoot": "More liquid dilutes the indicator, so the colour comes out paler and harder to judge.",
+        "quantity": "A very different volume in each tube makes the colours harder to compare fairly."
+      },
+      "explore": [
+        {
+          "if": "use a weak alkali like baking soda solution",
+          "then": "Blue rather than purple: weak alkalis have a lower pH, around 8 to 9."
+        }
+      ]
+    },
+    {
+      "id": "ui-1",
+      "title": "Universal indicator: tube 1",
+      "instruction": "Add 2 drops of universal indicator to tube 1.",
+      "requires": [
+        "acid-in"
+      ],
+      "action": "liquid.drop",
+      "from": "univ",
+      "to": "t1",
+      "quantity": {
+        "target": 0.1,
+        "plusMinus": 0.06,
+        "unit": "mL"
+      },
+      "complete": {
+        "onEvent": true
+      },
+      "technique": {
+        "kind": "dropwise",
+        "dropVolumeMl": 0.05,
+        "maxRateMlPerS": 0.2
+      },
+      "hints": [
+        "ind-1",
+        "ind-2",
+        "ind-3"
+      ],
+      "whatIf": {
+        "order": "Chemically it would still work, but put the liquid in first so you can watch the colour change as the drops land.",
+        "not-dropwise": "Pouring indicator floods the tube and makes the colour very dark. Two drops are enough to see it clearly.",
+        "overshoot": "Too many drops make the colour very dark, so it's harder to judge which shade it is.",
+        "quantity": "Too much indicator makes the colour very dark, so it's harder to judge which shade it is."
+      },
+      "explore": [
+        {
+          "if": "add the indicator before the acid",
+          "then": "You'd get the same colour in the end: it depends on the final mixture, not on the order."
+        }
+      ]
+    },
+    {
+      "id": "ui-2",
+      "title": "Universal indicator: tube 2",
+      "instruction": "Add 2 drops to tube 2.",
+      "requires": [
+        "water-in"
+      ],
+      "action": "liquid.drop",
+      "from": "univ",
+      "to": "t2",
+      "quantity": {
+        "target": 0.1,
+        "plusMinus": 0.06,
+        "unit": "mL"
+      },
+      "complete": {
+        "onEvent": true
+      },
+      "hints": [
+        "ind-1",
+        "ind-2",
+        "ind-3"
+      ],
+      "whatIf": {
+        "order": "Chemically it would still work, but put the water in first so you can watch the colour as the drops land.",
+        "overshoot": "Too many drops make the colour very dark, so it's harder to judge which shade it is.",
+        "quantity": "Too much indicator makes the colour very dark, so it's harder to judge which shade it is."
+      }
+    },
+    {
+      "id": "ui-3",
+      "title": "Universal indicator: tube 3",
+      "instruction": "Add 2 drops to tube 3.",
+      "requires": [
+        "base-in"
+      ],
+      "action": "liquid.drop",
+      "from": "univ",
+      "to": "t3",
+      "quantity": {
+        "target": 0.1,
+        "plusMinus": 0.06,
+        "unit": "mL"
+      },
+      "complete": {
+        "onEvent": true
+      },
+      "hints": [
+        "ind-1",
+        "ind-2",
+        "ind-3"
+      ],
+      "whatIf": {
+        "order": "Chemically it would still work, but put the alkali in first so you can watch the colour as the drops land.",
+        "overshoot": "Too many drops make the colour very dark, so it's harder to judge which shade it is.",
+        "quantity": "Too much indicator makes the colour very dark, so it's harder to judge which shade it is."
+      }
+    },
+    {
+      "id": "acid-t4",
+      "title": "2 mL acid into tube 4",
+      "instruction": "Pour about 2 mL acid into tube 4.",
+      "action": "liquid.pour",
+      "from": "acid",
+      "to": "t4",
+      "quantity": {
+        "target": 2,
+        "plusMinus": 0.5,
+        "unit": "mL"
+      },
+      "hints": [
+        "vol-1",
+        "vol-2",
+        "vol-3"
+      ],
+      "whatIf": {
+        "overshoot": "More acid dilutes the litmus, so the red is paler.",
+        "quantity": "A very different volume makes the colours harder to compare fairly."
+      }
+    },
+    {
+      "id": "litmus-acid",
+      "title": "Litmus in acid",
+      "instruction": "Pour 2 mL acid into tube 4, then add 2 drops of litmus.",
+      "action": "liquid.drop",
+      "from": "litmus",
+      "to": "t4",
+      "requires": [
+        "acid-t4"
+      ],
+      "complete": {
+        "onEvent": true
+      },
+      "hints": [
+        "ind-1",
+        "ind-2",
+        "ind-3"
+      ],
+      "whatIf": {
+        "order": "Chemically it would still work, but put the acid in first so you can see the litmus change."
+      },
+      "explore": [
+        {
+          "if": "add litmus to the water instead",
+          "then": "Purple: neutral litmus sits halfway between its red and blue forms."
+        }
+      ]
+    },
+    {
+      "id": "base-t5",
+      "title": "2 mL alkali into tube 5",
+      "instruction": "Pour about 2 mL alkali into tube 5.",
+      "action": "liquid.pour",
+      "from": "base",
+      "to": "t5",
+      "quantity": {
+        "target": 2,
+        "plusMinus": 0.5,
+        "unit": "mL"
+      },
+      "hints": [
+        "vol-1",
+        "vol-2",
+        "vol-3"
+      ],
+      "whatIf": {
+        "overshoot": "More alkali dilutes the litmus, so the blue is paler.",
+        "quantity": "A very different volume makes the colours harder to compare fairly."
+      }
+    },
+    {
+      "id": "litmus-base",
+      "title": "Litmus in alkali",
+      "instruction": "Add 2 drops of litmus to tube 5.",
+      "requires": [
+        "base-t5"
+      ],
+      "action": "liquid.drop",
+      "from": "litmus",
+      "to": "t5",
+      "complete": {
+        "onEvent": true
+      },
+      "hints": [
+        "ind-1",
+        "ind-2",
+        "ind-3"
+      ],
+      "whatIf": {
+        "order": "Chemically it would still work, but put the alkali in first so you can see the litmus change."
+      },
+      "explore": [
+        {
+          "if": "use litmus paper instead of litmus solution",
+          "then": "Same idea: red paper turns blue in alkali, blue paper turns red in acid. Paper is handy for a quick test."
+        }
+      ]
+    }
+  ],
+  "hints": {
+    "vol-1": {
+      "rung": 1,
+      "text": "How much is 2 mL in a test tube? Look at the tube's height."
+    },
+    "vol-2": {
+      "rung": 2,
+      "text": "Tilt the bottle just past the point where it starts to pour and watch the volume counter."
+    },
+    "vol-3": {
+      "rung": 3,
+      "text": "Watch a gentle 2 mL pour."
+    },
+    "ind-1": {
+      "rung": 1,
+      "text": "Indicators are strong dyes. A little goes a long way."
+    },
+    "ind-2": {
+      "rung": 2,
+      "text": "Tap the dropper bottle twice for 2 drops."
+    },
+    "ind-3": {
+      "rung": 3,
+      "text": "Watch two drops go in."
+    }
+  },
+  "observations": {
+    "whatHappened": "Universal indicator turned red in the acid, green in water and blue-purple in the alkali. Litmus turned red in the acid and blue in the alkali.",
+    "why": "Indicators are weak acids whose two forms have different colours. Lots of H⁺ (acid) pushes them into one form; lots of OH⁻ (alkali) into the other. Universal indicator mixes several dyes, so it shows a whole rainbow across pH 1 to 14.",
+    "equationLatex": "\\mathrm{HIn \\rightleftharpoons H^+ + In^-}",
+    "realWorld": [
+      "Soil testing for gardening",
+      "Swimming-pool chemistry",
+      "Red cabbage as a kitchen indicator"
+    ],
+    "prompts": [
+      {
+        "id": "q-water",
+        "question": "What colour did universal indicator turn in distilled water?",
+        "choices": [
+          "Red",
+          "Green",
+          "Purple",
+          "Colourless"
+        ],
+        "answer": 1,
+        "explain": "Pure water is neutral, pH 7, which is green on the universal indicator chart."
+      },
+      {
+        "id": "q-litmus",
+        "question": "Litmus turned blue in tube 5. That tells you the liquid is...",
+        "choices": [
+          "Acidic",
+          "Neutral",
+          "Alkaline",
+          "A salt"
+        ],
+        "answer": 2,
+        "explain": "Litmus is blue in alkalis and red in acids."
+      }
+    ]
+  },
+  "safety": [],
+  "golden": {
+    "durationS": 40,
+    "captions": [
+      {
+        "t": 0,
+        "text": "2 mL each of acid, water and alkali into three tubes.",
+        "why": "Using the same small volume in each tube makes it a fair comparison.",
+        "safety": "These are dilute, but acid and alkali can still sting eyes and skin, so pour gently into the small tubes."
+      },
+      {
+        "t": 10000,
+        "text": "Two drops of universal indicator in each...",
+        "why": "Universal indicator is a mix of several dyes. Each changes colour at a different pH, so together they make a rainbow."
+      },
+      {
+        "t": 20000,
+        "text": "Red, green, purple: a pH rainbow. Now litmus in acid and alkali.",
+        "why": "Red means acidic (0.1 M hydrochloric acid is about pH 1), green means neutral (pH 7), purple means strongly alkaline (about pH 13). Litmus has only two colours: red in acid, blue in alkali."
+      }
+    ],
+    "events": [
+      {
+        "t": 2000,
+        "type": "liquid.pour",
+        "payload": {
+          "from": "acid",
+          "to": "t1",
+          "volumeMl": 2,
+          "tiltDegMax": 60,
+          "meanRateMlPerS": 1.2,
+          "peakRateMlPerS": 2,
+          "durationMs": 1700
+        }
+      },
+      {
+        "t": 5000,
+        "type": "liquid.pour",
+        "payload": {
+          "from": "water",
+          "to": "t2",
+          "volumeMl": 2,
+          "tiltDegMax": 60,
+          "meanRateMlPerS": 1.2,
+          "peakRateMlPerS": 2,
+          "durationMs": 1700
+        }
+      },
+      {
+        "t": 8000,
+        "type": "liquid.pour",
+        "payload": {
+          "from": "base",
+          "to": "t3",
+          "volumeMl": 2,
+          "tiltDegMax": 60,
+          "meanRateMlPerS": 1.2,
+          "peakRateMlPerS": 2,
+          "durationMs": 1700
+        }
+      },
+      {
+        "t": 11000,
+        "type": "liquid.drop",
+        "payload": {
+          "from": "univ",
+          "to": "t1",
+          "drops": 2,
+          "volumeMl": 0.1
+        }
+      },
+      {
+        "t": 13000,
+        "type": "liquid.drop",
+        "payload": {
+          "from": "univ",
+          "to": "t2",
+          "drops": 2,
+          "volumeMl": 0.1
+        }
+      },
+      {
+        "t": 15000,
+        "type": "liquid.drop",
+        "payload": {
+          "from": "univ",
+          "to": "t3",
+          "drops": 2,
+          "volumeMl": 0.1
+        }
+      },
+      {
+        "t": 22000,
+        "type": "liquid.pour",
+        "payload": {
+          "from": "acid",
+          "to": "t4",
+          "volumeMl": 2,
+          "tiltDegMax": 60,
+          "meanRateMlPerS": 1.2,
+          "peakRateMlPerS": 2,
+          "durationMs": 1700
+        }
+      },
+      {
+        "t": 25000,
+        "type": "liquid.pour",
+        "payload": {
+          "from": "base",
+          "to": "t5",
+          "volumeMl": 2,
+          "tiltDegMax": 60,
+          "meanRateMlPerS": 1.2,
+          "peakRateMlPerS": 2,
+          "durationMs": 1700
+        }
+      },
+      {
+        "t": 28000,
+        "type": "liquid.drop",
+        "payload": {
+          "from": "litmus",
+          "to": "t4",
+          "drops": 2,
+          "volumeMl": 0.1
+        }
+      },
+      {
+        "t": 30000,
+        "type": "liquid.drop",
+        "payload": {
+          "from": "litmus",
+          "to": "t5",
+          "drops": 2,
+          "volumeMl": 0.1
+        }
+      },
+      {
+        "t": 36000,
+        "type": "param.set",
+        "payload": {
+          "key": "answer:q-water",
+          "value": 1
+        }
+      },
+      {
+        "t": 37000,
+        "type": "param.set",
+        "payload": {
+          "key": "answer:q-litmus",
+          "value": 2
+        }
+      }
+    ]
+  }
+}

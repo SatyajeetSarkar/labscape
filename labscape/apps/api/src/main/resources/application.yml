@@ -1,0 +1,99 @@
+spring:
+  application:
+    name: labscape-api
+  datasource:
+    # Neon in staging/prod (pooled host, ?sslmode=require); local docker compose by default.
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/labscape}
+    username: ${DATABASE_USERNAME:labscape}
+    password: ${DATABASE_PASSWORD:labscape}
+    hikari:
+      # Neon scales to zero; keep the pool small and tolerate cold starts.
+      maximum-pool-size: ${DATABASE_POOL_SIZE:5}
+      connection-timeout: 15000
+  flyway:
+    # Migrations use the direct (non-pooled) Neon host when FLYWAY_URL is set.
+    url: ${FLYWAY_URL:${spring.datasource.url}}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    locations: classpath:db/migration
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  mvc:
+    problemdetails:
+      enabled: true
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${PORT:8080}
+
+labscape:
+  web-origin: ${WEB_ORIGIN:http://localhost:5173}
+  web-origins: ${WEB_ORIGINS:${WEB_ORIGIN:http://localhost:5173}}
+  auth:
+    # HS256 key for the session JWT. Must be set (>= 32 bytes) outside dev.
+    jwt-secret: ${JWT_SECRET:dev-only-insecure-jwt-secret-change-me-0123456789}
+    session-days: 30
+    cookie-name: ls_session
+    cookie-secure: ${COOKIE_SECURE:true}
+    # Google sign-in is enabled when a client id is configured.
+    google-client-id: ${GOOGLE_CLIENT_ID:}
+    # Accounts registered with these emails become super_admin (first-admin bootstrap).
+    admin-bootstrap-emails: ${ADMIN_BOOTSTRAP_EMAILS:}
+  billing:
+    # sandbox = no money moves; a test sheet confirms payment through the same webhook path.
+    # razorpay = real Razorpay Subscriptions (needs key id/secret, the webhook secret and plan ids;
+    # startup fails with a clear message if any is missing). See docs/payments.md.
+    mode: ${BILLING_MODE:sandbox}
+    razorpay-key-id: ${RAZORPAY_KEY_ID:}
+    razorpay-key-secret: ${RAZORPAY_KEY_SECRET:}
+    webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:dev-webhook-secret}
+    razorpay-base-url: ${RAZORPAY_BASE_URL:https://api.razorpay.com/v1}
+    razorpay-timeout-seconds: ${RAZORPAY_TIMEOUT_SECONDS:15}
+    # Razorpay plan ids (plan_...) created in the dashboard, one per LABscape paid plan.
+    razorpay-plans:
+      premium_monthly: ${RAZORPAY_PLAN_PREMIUM_MONTHLY:}
+      premium_annual: ${RAZORPAY_PLAN_PREMIUM_ANNUAL:}
+  rewards:
+    daily-soft-cap: 1500
+    max-events-per-minute: 30
+  features:
+    # Flip on as each part ships; daily challenges only offer what can actually be completed.
+    experiments: true
+    quizzes: true
+    scenarios: true
+    molecular-view: true
+  ai:
+    # Gemini answers when a key is set; otherwise the built-in grounded tutor does. Same guard either way.
+    gemini-api-key: ${GEMINI_API_KEY:${GOOGLE_API_KEY:}}
+    model: ${AI_MODEL:gemini-3.8-flash}
+    # How hard the model thinks before it answers: minimal, low, medium or high. Low keeps a chat
+    # answer quick. Leave it blank for the model's own default.
+    thinking: ${AI_THINKING:low}
+    # Only for tests and proxies; blank means Google's own endpoint.
+    base-url: ${AI_BASE_URL:}
+  safety:
+    # R1 ships the safety engine behind this flag. Off => /v1/safety/resolve returns 503 and the
+    # playground shows no reactions at all.
+    engine-enabled: ${SAFETY_ENGINE_ENABLED:true}
+    probe-threshold: 3
+    probe-window-seconds: 600
+    cooldown-seconds: 120
+
+springdoc:
+  api-docs:
+    path: /v1/openapi.json
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

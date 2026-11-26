@@ -1,0 +1,114 @@
+{
+  "ph-indicators": {
+    "hash": "14db789c5c03c8",
+    "score": 100
+  },
+  "acid-base-titration": {
+    "hash": "170cb348327e71",
+    "score": 100
+  },
+  "precipitation-reactions": {
+    "hash": "0413bff378cf39",
+    "score": 100
+  },
+  "hydrogen-pop-test": {
+    "hash": "1f45ec62b9855a",
+    "score": 100
+  },
+  "iron-nail-copper-sulfate": {
+    "hash": "013feba04c1730",
+    "score": 100
+  },
+  "diluting-acid-safely": {
+    "hash": "18cd2b31e33b3f",
+    "score": 100
+  },
+  "flame-tests": {
+    "hash": "1f185411be5b24",
+    "score": 100
+  },
+  "elephant-toothpaste": {
+    "hash": "0cf5c37bec1267",
+    "score": 100
+  },
+  "metal-displacement": {
+    "hash": "1b27469db407ec",
+    "score": 100
+  },
+  "disappearing-cross": {
+    "hash": "1c6c84d9d48960",
+    "score": 100
+  },
+  "making-copper-sulfate": {
+    "hash": "101cbb2a3e0bf3",
+    "score": 100
+  },
+  "making-esters": {
+    "hash": "04063b6af5ef98",
+    "score": 100
+  },
+  "electrolysis-of-brine": {
+    "hash": "0c0e2cbe001afa",
+    "score": 100
+  },
+  "ohms-law": {
+    "hash": "18d20c7696d74b",
+    "score": 100
+  },
+  "series-and-parallel": {
+    "hash": "0f93e9a5ee7318",
+    "score": 100
+  },
+  "projectile-motion": {
+    "hash": "1c7c9ef349053c",
+    "score": 100
+  },
+  "refraction-snells-law": {
+    "hash": "0b501b9e1918ff",
+    "score": 100
+  },
+  "simple-pendulum": {
+    "hash": "1eadb78bf805eb",
+    "score": 100
+  },
+  "archimedes-principle": {
+    "hash": "154e0a8eafe7bd",
+    "score": 100
+  },
+  "newtons-second-law": {
+    "hash": "1202b95c6dc641",
+    "score": 100
+  },
+  "specific-heat-capacity": {
+    "hash": "0a8083ced0368a",
+    "score": 100
+  },
+  "quadratic-explorer": {
+    "hash": "0de1ee28c3cd5c",
+    "score": 100
+  },
+  "balance-equations": {
+    "hash": "1a9b831bf4cd60",
+    "score": 100
+  },
+  "unit-circle-trig": {
+    "hash": "034e8f05042b05",
+    "score": 100
+  },
+  "derivative-as-slope": {
+    "hash": "186711aebace0f",
+    "score": 100
+  },
+  "riemann-sums": {
+    "hash": "1ab858c12fbf29",
+    "score": 100
+  },
+  "dice-probability": {
+    "hash": "1f40d3dbaff5f0",
+    "score": 100
+  },
+  "graph-transformations": {
+    "hash": "03df5ee1b7db06",
+    "score": 100
+  }
+}

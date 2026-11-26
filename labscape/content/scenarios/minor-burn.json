@@ -1,0 +1,320 @@
+{
+  "slug": "minor-burn",
+  "title": "Minor burn first aid",
+  "kind": "burn",
+  "minutes": 4,
+  "summary": "A friend grabs a hot beaker. Cool it, take off her ring, cover it, and know when it isn't minor.",
+  "sources": [
+    "Indian Red Cross Society / St John Ambulance first aid: burns",
+    "NHS: Burns and scalds (treatment)",
+    "112 India: national emergency number"
+  ],
+  "tools": [
+    { "id": "point", "label": "Point it out", "hint": "Spot or check something" },
+    { "id": "hands", "label": "Your hands", "hint": "Touch, turn, tell" },
+    { "id": "ice", "label": "Ice cubes", "hint": "From the freezer" },
+    { "id": "butter", "label": "Butter", "hint": "From a lunchbox" },
+    { "id": "toothpaste", "label": "Toothpaste", "hint": "Tube" },
+    { "id": "cling-film", "label": "Cling film", "hint": "Clean roll" },
+    { "id": "cotton-wool", "label": "Cotton wool", "hint": "Fluffy ball" },
+    { "id": "phone", "label": "Phone", "hint": "Call 112" }
+  ],
+  "hotspots": [
+    { "id": "teacher", "label": "Your teacher", "x": 0, "y": 88, "w": 66, "h": 212 },
+    { "id": "beaker", "label": "Hot beaker on the tripod", "x": 70, "y": 64, "w": 100, "h": 140 },
+    { "id": "friend", "label": "Your friend", "x": 182, "y": 30, "w": 100, "h": 106 },
+    { "id": "ring", "label": "Ring on her finger", "x": 284, "y": 136, "w": 48, "h": 66 },
+    { "id": "burn", "label": "Burned fingertips", "x": 334, "y": 136, "w": 64, "h": 66 },
+    { "id": "tap", "label": "Cold tap over the sink", "x": 404, "y": 70, "w": 120, "h": 150 }
+  ],
+  "scenes": [
+    {
+      "id": "detect",
+      "stage": "detection",
+      "timerS": 10,
+      "growth": 0.8,
+      "hazard": 20,
+      "narration": "Your friend grabs a beaker that has just come off the tripod and yelps. Two fingertips are red and stinging.",
+      "prompt": "Spot the problem. Pick \"Point it out\" and tap it.",
+      "hints": [
+        { "text": "Your friend yelped and is holding her hand. What exactly got hurt?" },
+        { "text": "Look at her fingertips.", "target": "burn" },
+        { "text": "Pick \"Point it out\" and use it on her burned fingertips.", "tool": "point", "target": "burn" }
+      ],
+      "props": ["ring"],
+      "choices": [
+        {
+          "id": "recognise",
+          "label": "Point at her fingertips: that's a burn, cool it now",
+          "quality": "best",
+          "feedback": "Yes. A burn keeps cooking the skin after the contact ends. Cooling quickly limits the damage.",
+          "next": "assess",
+          "hazardDelta": -15,
+          "recognise": true,
+          "action": { "tool": "point", "target": "burn" },
+          "anim": "alert"
+        },
+        {
+          "id": "beaker",
+          "label": "Check whether the beaker is cracked first",
+          "quality": "poor",
+          "feedback": "The beaker can wait. Your friend's fingers can't: every second of cooling counts.",
+          "next": "assess",
+          "hazardDelta": 10,
+          "action": { "tool": "point", "target": "beaker" },
+          "anim": "none"
+        },
+        {
+          "id": "ignore",
+          "label": "Tell her to shake it off, it'll be fine",
+          "quality": "poor",
+          "feedback": "Shaking it doesn't cool it. Get it under cool running water straight away.",
+          "next": "assess",
+          "hazardDelta": 10,
+          "action": { "tool": "hands", "target": "burn" },
+          "anim": "warn"
+        }
+      ]
+    },
+    {
+      "id": "assess",
+      "stage": "assessment",
+      "timerS": 15,
+      "growth": 0.8,
+      "hazard": 25,
+      "narration": "The red area is smaller than her palm and the skin isn't broken. She isn't feeling faint.",
+      "prompt": "How serious is it?",
+      "hints": [
+        { "text": "Smaller than her palm, skin not broken, not feeling faint: does that sound like a small burn or a serious one?" },
+        { "text": "Look at your teacher: they need to know about any injury in the lab.", "target": "teacher" },
+        { "text": "Use your hands on your teacher: it's a minor burn, so tell them and start first aid.", "tool": "hands", "target": "teacher" }
+      ],
+      "props": ["ring"],
+      "choices": [
+        {
+          "id": "minor",
+          "label": "Small and unbroken: a minor burn. Tell the teacher and start first aid",
+          "quality": "best",
+          "feedback": "Right. Small, unbroken burns can be treated with first aid. Still tell the teacher.",
+          "next": "cool",
+          "hazardDelta": -15,
+          "escalate": true,
+          "action": { "tool": "hands", "target": "teacher" },
+          "anim": "call"
+        },
+        {
+          "id": "severe",
+          "label": "It's severe: call an ambulance",
+          "quality": "poor",
+          "feedback": "This one is minor. Call 112 for large or deep burns, burns on the face, hands or feet of a young child, or chemical and electrical burns.",
+          "next": "cool",
+          "hazardDelta": 10,
+          "escalate": true,
+          "action": { "tool": "phone", "target": "burn" },
+          "anim": "call"
+        }
+      ]
+    },
+    {
+      "id": "cool",
+      "stage": "decision",
+      "timerS": 15,
+      "growth": 0.8,
+      "hazard": 30,
+      "narration": "What first aid do you give?",
+      "prompt": "Cool the burn: drag something onto it.",
+      "hints": [
+        { "text": "Heat keeps damaging skin until it's cooled. What cools it gently, and for how long? (Ice is too harsh.)" },
+        { "text": "Look at the cold tap over the sink.", "target": "tap" },
+        { "text": "Use your hands on the cold tap: hold her fingers under cool running water for 20 minutes.", "tool": "hands", "target": "tap" }
+      ],
+      "props": ["ring"],
+      "choices": [
+        {
+          "id": "cool",
+          "label": "Hold her fingers under cool running water for 20 minutes",
+          "quality": "best",
+          "feedback": "Correct. Cool (not icy) running water for 20 minutes is the most important step. It still helps up to 3 hours after a burn.",
+          "next": "ring",
+          "hazardDelta": -15,
+          "actions": [{ "tool": "hands", "target": "tap" }, { "tool": "hands", "target": "burn" }],
+          "anim": "tap-run"
+        },
+        {
+          "id": "ice",
+          "label": "Hold ice on it",
+          "quality": "unsafe",
+          "feedback": "Ice is too cold: it can damage the skin further, like frostbite. Use cool running water instead.",
+          "next": "ring",
+          "hazardDelta": 25,
+          "action": { "tool": "ice", "target": "burn" },
+          "anim": "ice-on"
+        },
+        {
+          "id": "butter",
+          "label": "Rub butter on it",
+          "quality": "unsafe",
+          "feedback": "Never use butter, ghee or oil: they trap the heat in and can cause infection.",
+          "next": "ring",
+          "hazardDelta": 25,
+          "action": { "tool": "butter", "target": "burn" },
+          "anim": "smear"
+        },
+        {
+          "id": "toothpaste",
+          "label": "Put toothpaste on it",
+          "quality": "unsafe",
+          "feedback": "Toothpaste doesn't cool a burn. It traps heat and can irritate and infect the skin. Water only.",
+          "next": "ring",
+          "hazardDelta": 25,
+          "action": { "tool": "toothpaste", "target": "burn" },
+          "anim": "smear"
+        }
+      ]
+    },
+    {
+      "id": "ring",
+      "stage": "decision",
+      "timerS": 12,
+      "growth": 0.6,
+      "hazard": 20,
+      "narration": "Her fingers are cooling under the tap. You notice she's wearing a ring on the burned hand.",
+      "prompt": "Anything else before it swells?",
+      "hints": [
+        { "text": "Burned skin swells. What could get stuck on a swollen finger?" },
+        { "text": "Look at the ring on her burned hand.", "target": "ring" },
+        { "text": "Use your hands on the ring: slip it off gently before the finger swells.", "tool": "hands", "target": "ring" }
+      ],
+      "props": ["ring", "water-on"],
+      "choices": [
+        {
+          "id": "remove",
+          "label": "Gently slip the ring off before the finger swells",
+          "quality": "best",
+          "feedback": "Yes. Burned skin swells. Take off rings, watches and bangles near the burn early, unless they're stuck to the skin.",
+          "next": "cover",
+          "hazardDelta": -10,
+          "action": { "tool": "hands", "target": "ring" },
+          "anim": "ring-off"
+        },
+        {
+          "id": "leave",
+          "label": "It's only a ring, leave it on",
+          "quality": "poor",
+          "feedback": "Swelling can trap a ring and cut off blood flow. Remove jewellery near a burn early.",
+          "next": "cover",
+          "hazardDelta": 10,
+          "action": { "tool": "point", "target": "ring" },
+          "anim": "none"
+        }
+      ]
+    },
+    {
+      "id": "cover",
+      "stage": "consequence",
+      "timerS": 15,
+      "growth": 0.4,
+      "hazard": 15,
+      "narration": "After 20 minutes the stinging has eased. A small blister is forming on one fingertip.",
+      "prompt": "Protect the burn.",
+      "hints": [
+        { "text": "A blister is the body's own clean dressing. What would protect it without sticking to it or leaving fibres?" },
+        { "text": "Look at the burn.", "target": "burn" },
+        { "text": "Lay the cling film loosely over the burn. Don't wrap it tight.", "tool": "cling-film", "target": "burn" }
+      ],
+      "props": ["blister"],
+      "choices": [
+        {
+          "id": "cling",
+          "label": "Lay cling film loosely over it (don't wrap it tight)",
+          "quality": "best",
+          "feedback": "Yes. Cling film laid loosely keeps the burn clean without sticking. A clean, non-fluffy dressing works too.",
+          "next": "help",
+          "hazardDelta": -10,
+          "action": { "tool": "cling-film", "target": "burn" },
+          "anim": "cling"
+        },
+        {
+          "id": "pop",
+          "label": "Pop the blister so it heals faster",
+          "quality": "unsafe",
+          "feedback": "Don't burst blisters: they protect the skin underneath from infection.",
+          "next": "help",
+          "hazardDelta": 25,
+          "action": { "tool": "hands", "target": "burn" },
+          "anim": "warn"
+        },
+        {
+          "id": "cotton",
+          "label": "Wrap it in cotton wool",
+          "quality": "poor",
+          "feedback": "Cotton wool fibres stick to burns. Use cling film or a non-fluffy dressing.",
+          "next": "help",
+          "hazardDelta": 10,
+          "action": { "tool": "cotton-wool", "target": "burn" },
+          "anim": "cotton"
+        }
+      ]
+    },
+    {
+      "id": "help",
+      "stage": "consequence",
+      "timerS": 15,
+      "growth": 0.3,
+      "hazard": 15,
+      "narration": "The burn is covered. The blister is about the size of a coin.",
+      "prompt": "Does she need more help?",
+      "hints": [
+        { "text": "It has blistered. Should someone trained take a look?" },
+        { "text": "Look at your teacher.", "target": "teacher" },
+        { "text": "Use your hands on your teacher: tell them it has blistered so the school nurse or a doctor can check it.", "tool": "hands", "target": "teacher" }
+      ],
+      "props": ["blister", "cling-on"],
+      "choices": [
+        {
+          "id": "nurse",
+          "label": "Tell the teacher it has blistered, so the school nurse or a doctor can check it",
+          "quality": "best",
+          "feedback": "Right. Blistered burns should be checked by a nurse or doctor. Get urgent help (112) if a burn is large, deep, on the face, or the person feels unwell.",
+          "next": "end-safe",
+          "hazardDelta": -10,
+          "escalate": true,
+          "action": { "tool": "hands", "target": "teacher" },
+          "anim": "call"
+        },
+        {
+          "id": "back",
+          "label": "It's covered now, so get back to the experiment",
+          "quality": "poor",
+          "feedback": "A burn that has blistered should be checked by a nurse or doctor. Tell the teacher.",
+          "next": "end-safe",
+          "hazardDelta": 10,
+          "action": { "tool": "point", "target": "beaker" },
+          "anim": "none"
+        }
+      ]
+    }
+  ],
+  "endings": {
+    "end-safe": {
+      "outcome": "safe",
+      "text": "The burn heals over the next week. Quick cooling made all the difference."
+    },
+    "end-unsafe": {
+      "outcome": "unsafe",
+      "text": "The burn was made worse."
+    }
+  },
+  "learn": [
+    "Cool a burn under cool running water for 20 minutes, as soon as possible.",
+    "Remove rings, watches or bangles near the burn before it swells.",
+    "Cover loosely with cling film or a clean non-fluffy dressing.",
+    "No ice, butter, ghee, oil or toothpaste; don't burst blisters.",
+    "Get a blistered burn checked. Call 112 for large or deep burns, burns to the face, chemical or electrical burns, or burns on young children."
+  ],
+  "id": "emergency-minor-burn",
+  "version": 2,
+  "reviewStatus": "draft",
+  "disclaimer": "Training only. This is not a substitute for emergency services or certified first-aid and fire-safety training. In a real emergency in India, call 112.",
+  "quizId": "quiz-emergency-minor-burn"
+}

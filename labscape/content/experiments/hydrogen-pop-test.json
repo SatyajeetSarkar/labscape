@@ -1,0 +1,506 @@
+{
+  "id": "chem-mg-hcl-hydrogen",
+  "slug": "hydrogen-pop-test",
+  "version": 1,
+  "subject": "chemistry",
+  "title": "Magnesium and acid: the squeaky pop",
+  "fidelity": "approximate",
+  "reviewStatus": "draft",
+  "idea": {
+    "text": "Magnesium is more reactive than hydrogen, so it pushes hydrogen out of hydrochloric acid. The hydrogen bubbles off as a gas, and you can prove it is hydrogen because it burns with a squeaky pop.",
+    "analogy": "Like musical chairs: magnesium takes hydrogen's seat in the acid, and hydrogen is left standing, so it bubbles away as a gas."
+  },
+  "bench": {
+    "items": [
+      {
+        "id": "acid",
+        "kind": "reagent_bottle",
+        "label": "Hydrochloric acid 1 M",
+        "x": -300,
+        "z": -60,
+        "fill": {
+          "reagentId": "hcl-1",
+          "volumeMl": 100
+        }
+      },
+      {
+        "id": "rack",
+        "kind": "test_tube_rack",
+        "x": -40,
+        "z": 40
+      },
+      {
+        "id": "t1",
+        "kind": "test_tube",
+        "label": "Reaction tube",
+        "x": -60,
+        "z": 40,
+        "socket": "rack:rack"
+      },
+      {
+        "id": "t2",
+        "kind": "test_tube",
+        "label": "Collection tube",
+        "x": 20,
+        "z": 40,
+        "socket": "rack:rack"
+      },
+      {
+        "id": "mg-ribbon",
+        "kind": "watch_glass",
+        "label": "Magnesium ribbon (on a watch glass)",
+        "x": 160,
+        "z": 60,
+        "reagentId": "mg-ribbon"
+      },
+      {
+        "id": "bunsen",
+        "kind": "bunsen",
+        "x": 260,
+        "z": -40
+      },
+      {
+        "id": "splint",
+        "kind": "splint",
+        "x": 240,
+        "z": 100
+      },
+      {
+        "id": "goggles",
+        "kind": "goggles",
+        "x": 320,
+        "z": 110
+      }
+    ]
+  },
+  "steps": [
+    {
+      "id": "goggles",
+      "title": "Put on goggles",
+      "instruction": "1 M hydrochloric acid is corrosive. Goggles on.",
+      "action": "equipment.place",
+      "from": "goggles",
+      "complete": {
+        "onEvent": true
+      },
+      "scoring": {
+        "equipment": 1
+      },
+      "hints": [
+        "safe-1",
+        "safe-2",
+        "safe-3"
+      ]
+    },
+    {
+      "id": "acid-in",
+      "title": "5 mL acid into the tube",
+      "instruction": "Pour about 5 mL of acid into the reaction tube, gently.",
+      "requires": [
+        "goggles"
+      ],
+      "action": "liquid.pour",
+      "from": "acid",
+      "to": "t1",
+      "quantity": {
+        "target": 5,
+        "plusMinus": 1,
+        "unit": "mL"
+      },
+      "technique": {
+        "kind": "slow_pour",
+        "maxRateMlPerS": 3
+      },
+      "hints": [
+        "vol-1",
+        "vol-2",
+        "vol-3"
+      ],
+      "whatIf": {
+        "order": "Without goggles, one splash in the eye can cause serious, sometimes permanent, damage within seconds. That's why goggles go on before you open any bottle.",
+        "rate": "A fast pour into a narrow test tube splashes acid up the sides and out of the top.",
+        "overshoot": "More acid fills the tube higher, so the fizzing can froth over the top. 5 mL is plenty.",
+        "quantity": "The amount of acid changes how long the fizzing lasts. With too little, some magnesium may be left unreacted."
+      },
+      "explore": [
+        {
+          "if": "use 2 M acid instead of 1 M",
+          "then": "The fizzing is faster and the tube gets hotter, because acid particles hit the magnesium more often. More gas, sooner."
+        },
+        {
+          "if": "use 0.1 M acid",
+          "then": "Very slow fizzing: there are ten times fewer acid particles, so you might not collect enough hydrogen for a pop."
+        }
+      ]
+    },
+    {
+      "id": "mg-in",
+      "title": "Drop in the magnesium",
+      "instruction": "Add a 2 cm piece of magnesium ribbon (about 0.05 g).",
+      "requires": [
+        "acid-in"
+      ],
+      "action": "solid.add",
+      "from": "mg-ribbon",
+      "to": "t1",
+      "quantity": {
+        "target": 0.05,
+        "plusMinus": 0.02,
+        "unit": "g"
+      },
+      "hints": [
+        "mg-1",
+        "mg-2",
+        "mg-3"
+      ],
+      "whatIf": {
+        "order": "Add the acid first so the magnesium has something to react with.",
+        "overshoot": "More magnesium makes more hydrogen and more heat, and the tube can froth over. A 2 cm strip is plenty.",
+        "quantity": "More magnesium makes more gas and heat; less makes less. A 2 cm strip is about right for one test tube."
+      },
+      "explore": [
+        {
+          "if": "use magnesium powder instead of ribbon",
+          "then": "Powder has a much bigger surface area, so the reaction is much faster and hotter. It can fizz violently."
+        },
+        {
+          "if": "use copper instead of magnesium",
+          "then": "Nothing happens. Copper is less reactive than hydrogen, so it can't push hydrogen out of the acid."
+        }
+      ]
+    },
+    {
+      "id": "collect",
+      "title": "Collect the gas",
+      "instruction": "Straight away, hold the collection tube upside down over the reaction tube. Hydrogen is lighter than air and rises into it.",
+      "requires": [
+        "mg-in"
+      ],
+      "action": "equipment.connect",
+      "from": "t1",
+      "to": "t2",
+      "complete": {
+        "onEvent": true
+      },
+      "hints": [
+        "gas-1",
+        "gas-2",
+        "gas-3"
+      ],
+      "whatIf": {
+        "order": "Add the magnesium first. Until then there's no gas to collect."
+      },
+      "explore": [
+        {
+          "if": "hold the collection tube the right way up",
+          "then": "Hydrogen is much lighter than air, so it floats up and out of the tube. It must be upside down to trap the gas."
+        },
+        {
+          "if": "wait a minute before collecting",
+          "then": "Most of the hydrogen escapes into the room first, so you might not collect enough for a pop."
+        }
+      ]
+    },
+    {
+      "id": "light-burner",
+      "title": "Light the Bunsen",
+      "instruction": "Light the Bunsen burner so you can light a splint.",
+      "action": "heat.set",
+      "from": "bunsen",
+      "alsoActions": [],
+      "complete": {
+        "onEvent": true
+      },
+      "hints": [
+        "burn-1",
+        "burn-2",
+        "burn-3"
+      ],
+      "explore": [
+        {
+          "if": "use a match instead of the burner",
+          "then": "That works too. The burner is just a steady flame for lighting the splint."
+        }
+      ]
+    },
+    {
+      "id": "light-splint",
+      "title": "Light a splint",
+      "instruction": "Hold the splint in the flame until it catches.",
+      "requires": [
+        "light-burner"
+      ],
+      "action": "equipment.connect",
+      "from": "splint",
+      "to": "bunsen",
+      "complete": {
+        "onEvent": true
+      },
+      "hints": [
+        "burn-1",
+        "burn-2",
+        "burn-3"
+      ],
+      "whatIf": {
+        "order": "Light the burner first: the splint needs a flame to catch."
+      }
+    },
+    {
+      "id": "pop",
+      "title": "The pop test",
+      "instruction": "Bring the lit splint to the mouth of the collection tube.",
+      "requires": [
+        "collect",
+        "light-splint"
+      ],
+      "action": "equipment.connect",
+      "from": "splint",
+      "to": "t2",
+      "complete": {
+        "predicate": "seen:pop-test"
+      },
+      "hints": [
+        "pop-1",
+        "pop-2",
+        "pop-3"
+      ],
+      "whatIf": {
+        "order": "You need both ready: hydrogen collected in the tube and a burning splint. Otherwise there's nothing to pop."
+      },
+      "explore": [
+        {
+          "if": "use a glowing splint instead of a burning one",
+          "then": "A glowing splint relights in oxygen, not hydrogen. Hydrogen needs a lit flame to make its pop."
+        },
+        {
+          "if": "collect pure hydrogen with no air in the tube",
+          "then": "The loudest pop comes from hydrogen mixed with some air. A tube of almost pure hydrogen may just burn quietly at the mouth."
+        }
+      ]
+    }
+  ],
+  "hints": {
+    "safe-1": {
+      "rung": 1,
+      "text": "What protects your eyes from acid spray?"
+    },
+    "safe-2": {
+      "rung": 2,
+      "text": "Drag the goggles onto your face icon first."
+    },
+    "safe-3": {
+      "rung": 3,
+      "text": "Watch the goggles go on."
+    },
+    "vol-1": {
+      "rung": 1,
+      "text": "About a third of a test tube is plenty."
+    },
+    "vol-2": {
+      "rung": 2,
+      "text": "Tilt gently and stop at 5 mL on the counter."
+    },
+    "vol-3": {
+      "rung": 3,
+      "text": "Watch a gentle pour."
+    },
+    "mg-1": {
+      "rung": 1,
+      "text": "Which solid reacts with the acid?"
+    },
+    "mg-2": {
+      "rung": 2,
+      "text": "Drag the magnesium ribbon into the reaction tube."
+    },
+    "mg-3": {
+      "rung": 3,
+      "text": "Watch the ribbon drop in."
+    },
+    "gas-1": {
+      "rung": 1,
+      "text": "The gas escapes fast. How can you trap a gas lighter than air?"
+    },
+    "gas-2": {
+      "rung": 2,
+      "text": "Drag the empty tube upside down over the reaction tube's mouth."
+    },
+    "gas-3": {
+      "rung": 3,
+      "text": "Watch the collection tube go over the top."
+    },
+    "burn-1": {
+      "rung": 1,
+      "text": "You need a flame to light the splint."
+    },
+    "burn-2": {
+      "rung": 2,
+      "text": "Turn on the gas and press the igniter, then hold the splint in the flame."
+    },
+    "burn-3": {
+      "rung": 3,
+      "text": "Watch the burner light and the splint catch."
+    },
+    "pop-1": {
+      "rung": 1,
+      "text": "Hydrogen burns. What happens if a flame meets it?"
+    },
+    "pop-2": {
+      "rung": 2,
+      "text": "Lift the collection tube and bring the lit splint to its mouth."
+    },
+    "pop-3": {
+      "rung": 3,
+      "text": "Watch for the squeaky pop."
+    }
+  },
+  "observations": {
+    "whatHappened": "The magnesium fizzed and shrank as bubbles streamed off it, and the tube felt warm. The collected gas burned with a squeaky pop.",
+    "why": "Magnesium is more reactive than hydrogen, so it pushes hydrogen out of the acid. The metal becomes Mg²⁺ ions in solution and hydrogen gas bubbles off. The reaction gives out heat. Hydrogen mixed with air burns very fast, which makes the pop.",
+    "equationLatex": "\\mathrm{Mg(s) + 2HCl(aq) \\longrightarrow MgCl_2(aq) + H_2(g)}",
+    "realWorld": [
+      "Hydrogen as a clean fuel",
+      "Why acids corrode metal pipes",
+      "The reactivity series"
+    ],
+    "prompts": [
+      {
+        "id": "q-gas",
+        "question": "Which gas gives a squeaky pop with a lit splint?",
+        "choices": [
+          "Oxygen",
+          "Carbon dioxide",
+          "Hydrogen",
+          "Chlorine"
+        ],
+        "answer": 2,
+        "explain": "Hydrogen burns with a pop. Oxygen relights a glowing splint; CO₂ puts it out."
+      },
+      {
+        "id": "q-heat",
+        "question": "The tube warmed up. The reaction is...",
+        "choices": [
+          "Exothermic",
+          "Endothermic",
+          "Neither",
+          "Only physical"
+        ],
+        "answer": 0,
+        "explain": "It releases energy as heat, so it is exothermic."
+      }
+    ]
+  },
+  "safety": [],
+  "golden": {
+    "durationS": 60,
+    "captions": [
+      {
+        "t": 0,
+        "text": "Goggles on, then 5 mL of 1 M hydrochloric acid.",
+        "why": "Only a small volume is needed: the reaction makes plenty of gas.",
+        "safety": "1 M hydrochloric acid is corrosive and can damage eyes, so goggles go on first."
+      },
+      {
+        "t": 6000,
+        "text": "Drop in the magnesium and trap the gas straight away.",
+        "slow": true,
+        "why": "Magnesium + hydrochloric acid → magnesium chloride + hydrogen. The fizzing is hydrogen gas bubbling out.",
+        "safety": "Hydrogen is lighter than air, so the collection tube is held upside down over the reaction tube to catch it as it rises."
+      },
+      {
+        "t": 20000,
+        "text": "Light a splint while the gas collects...",
+        "why": "The splint has to be burning when it meets the hydrogen. Feel the tube: it's warm, because the reaction is exothermic."
+      },
+      {
+        "t": 50000,
+        "text": "Squeaky pop: hydrogen!",
+        "why": "Hydrogen mixed with air burns so fast it makes a tiny explosion: the pop. The only product is water."
+      }
+    ],
+    "events": [
+      {
+        "t": 1000,
+        "type": "equipment.place",
+        "payload": {
+          "equipmentId": "goggles",
+          "x": 0,
+          "y": 0,
+          "socket": "worn"
+        }
+      },
+      {
+        "t": 4000,
+        "type": "liquid.pour",
+        "payload": {
+          "from": "acid",
+          "to": "t1",
+          "volumeMl": 5,
+          "tiltDegMax": 55,
+          "meanRateMlPerS": 2,
+          "peakRateMlPerS": 2.8,
+          "durationMs": 2500
+        }
+      },
+      {
+        "t": 7000,
+        "type": "solid.add",
+        "payload": {
+          "from": "mg-ribbon",
+          "to": "t1",
+          "massG": 0.05
+        }
+      },
+      {
+        "t": 8000,
+        "type": "equipment.connect",
+        "payload": {
+          "from": "t1",
+          "to": "t2",
+          "port": "collect"
+        }
+      },
+      {
+        "t": 20000,
+        "type": "heat.set",
+        "payload": {
+          "target": "bunsen",
+          "powerPct": 100
+        }
+      },
+      {
+        "t": 23000,
+        "type": "equipment.connect",
+        "payload": {
+          "from": "splint",
+          "to": "bunsen",
+          "port": "flame"
+        }
+      },
+      {
+        "t": 50000,
+        "type": "equipment.connect",
+        "payload": {
+          "from": "splint",
+          "to": "t2",
+          "port": "mouth"
+        }
+      },
+      {
+        "t": 55000,
+        "type": "param.set",
+        "payload": {
+          "key": "answer:q-gas",
+          "value": 2
+        }
+      },
+      {
+        "t": 56000,
+        "type": "param.set",
+        "payload": {
+          "key": "answer:q-heat",
+          "value": 0
+        }
+      }
+    ]
+  }
+}
